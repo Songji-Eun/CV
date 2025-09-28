@@ -8,7 +8,7 @@
   <style>
     html,body{margin:0;height:100%;background:#111;}
     .wrap{position:fixed;inset:0}
-    iframe{border:0;width:100%;height:100%}
+    iframe,object{border:0;width:100%;height:100%}
     .topbar{
       position:fixed;top:8px;right:8px;z-index:10;
       background:#fff;padding:8px 12px;border-radius:12px;
@@ -17,14 +17,41 @@
     }
     .topbar a{color:#111;text-decoration:none}
     .topbar a:hover{text-decoration:underline}
+    /* 모바일 전용 안내 버튼 (iframe 이슈 대비) */
+    @media (max-width: 820px){
+      .mobile-open{display:block;position:fixed;left:50%;bottom:24px;transform:translateX(-50%);
+        background:#fff;border-radius:12px;padding:10px 14px;z-index:20}
+    }
   </style>
+  <script>
+    // iOS/모바일의 iframe-PDF 단일 페이지 렌더링 이슈 회피용
+    // 작은 화면에서는 PDF를 직접 여는 것이 가장 호환성이 좋음
+    (function(){
+      const isSmall = Math.min(window.innerWidth, window.innerHeight) < 820;
+      const isiOS = /iP(hone|od|ad)/.test(navigator.platform) ||
+                    (/Mac/.test(navigator.platform) && 'ontouchend' in document);
+      if(isSmall || isiOS){
+        // 직접 PDF로 이동 (멀티페이지 네이티브 뷰어)
+        window.location.replace('cv.pdf');
+      }
+    })();
+  </script>
 </head>
 <body>
   <div class="topbar">
-    <a href="cv2.pdf?v=3" download>Download CV</a>
+    <a href="cv2.pdf" download>Download CV</a>
   </div>
-<div class="wrap">
-  <iframe src="cv2.pdf?v=3#toolbar=0&navpanes=0&scrollbar=0&view=FitH"></iframe>
-</div>
+  <!-- 데스크톱/대화면에서는 임베드로 표시 -->
+  <div class="wrap">
+    <object data="cv2.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" type="application/pdf">
+      <iframe src="cv2.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH"></iframe>
+    </object>
+  </div>
+  <a class="mobile-open" href="cv2.pdf" style="display:none">Open CV</a>
+  <noscript>
+    <div style="position:fixed;inset:0;display:grid;place-items:center;background:#111;color:#fff;font-family:system-ui">
+      자바스크립트를 켜거나 <a style="color:#0ff" href="cv2.pdf">여기</a>를 눌러 CV를 여세요.
+    </div>
+  </noscript>
 </body>
 </html>
