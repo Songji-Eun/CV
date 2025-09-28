@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>CV | Songji Eun</title>
+  <style>
+    html,body{margin:0;height:100%;background:#111;}
+    .wrap{position:fixed;inset:0}
+    iframe{border:0;width:100%;height:100%}
+    .topbar{
+      position:fixed;top:8px;right:8px;z-index:10;
+      background:#fff;padding:8px 12px;border-radius:12px;
+      font-family:system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      box-shadow:0 6px 20px rgba(0,0,0,.25);
+    }
+    .topbar a{color:#111;text-decoration:none}
+    .topbar a:hover{text-decoration:underline}
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <a href="cv.pdf" download>Download CV</a>
+  </div>
+  <!-- PDF 툴바 숨김 & 폭 맞춤 -->
+  <div class="wrap"><iframe src="cv.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH"></iframe></div>
+</body>
+</html>
